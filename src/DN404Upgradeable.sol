@@ -123,7 +123,7 @@ KeeperCompatibleInterface {
      * @param to: address to which tokens should be minted.
      * @param amount: amount of tokens to mint.
      */
-    function mint(address to, uint256 amount) external {
+    function mint(address to, uint256 amount) external nonReentrant{
         _mint(to, amount);
     }
 
@@ -131,7 +131,7 @@ KeeperCompatibleInterface {
      * @notice Mints given amount of tokens. This allows the owner of the contract to mint more tokens.
      * @param _amount: amount of tokens to mint.
      */
-    function buy(uint _amount)external{
+    function buy(uint _amount)external nonReentrant{
         _transfer(address(this), msg.sender, _amount);
     }
 

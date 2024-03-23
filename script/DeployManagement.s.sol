@@ -14,7 +14,7 @@ import { ERC1967Proxy } from "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy
 /// Script
 /// -----------------------------------------------------------------------
 
-contract DeployDN404 is Script {
+contract DeployManagement is Script {
     HelperConfig public config;
 
     
@@ -30,19 +30,20 @@ contract DeployDN404 is Script {
         (uint256 key) = config.activeNetworkConfig();
 
         vm.startBroadcast(vm.rememberKey(key));
-
+        address _implementation = 0x4a76115b700C0063273Cf8Eb94071555a2Aa8f03; ///REPLACE WITH IMPLEMENTATION ADDRESS
         Management Managementimplementation = new Management();
         bytes memory DN404init = abi.encodeWithSelector(
             Management.initialize.selector, 
-            vm.addr(key)
+            vm.addr(key),
+            _implementation
         );
 
         Managmentproxy = new ERC1967Proxy(address(Managementimplementation), DN404init);
         
         management = Management(payable(Managmentproxy));
         
-        console.log("DN404",address(Managementimplementation));
-        console.log("Proxy",address(Managmentproxy));
+        console.log("ManagmentImplementation",address(Managementimplementation));
+        console.log("ManagmentProxy",address(Managmentproxy));
         vm.stopBroadcast();
 
         

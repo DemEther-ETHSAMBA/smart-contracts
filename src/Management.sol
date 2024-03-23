@@ -16,7 +16,7 @@ import { SecurityUpgradeable } from "./SecurityUpgradeable.sol";
 import { DN404Upgradeable } from "./DN404Upgradeable.sol";
 
 //deploy your Oracle With Chainlink Aggregator
-import { MockV3Aggregator } from "./chainlink/MockV3Aggregator.sol";
+//import { MockV3Aggregator } from "./chainlink/MockV3Aggregator.sol";
 
 /// -----------------------------------------------------------------------
 /// Contract
@@ -29,14 +29,27 @@ import { MockV3Aggregator } from "./chainlink/MockV3Aggregator.sol";
 contract Management is SecurityUpgradeable, UUPSUpgradeable {
     event DeployedDN404(address indexed deployer, address indexed _contract);
 
-    event DeployedOracle(address indexed deployer, address indexed _contract);
+    event ChangeImplementation(address indexed _old, address indexed _new);
+
+    //event DeployedOracle(address indexed deployer, address indexed _contract);
+
+    event DeployedL2TokenBridge(address indexed deployer, address indexed _contract);
+
+    address public implementation;
 
     /**
      * @notice Intializes the function.
      * @param owner_: address of the owner of the contract
      */
-    function initialize(address owner_) external initializer {
+    // function initialize (address owner_, address _implementation) external onlyInitializing{
+    //     __Security_init(owner_);
+    //     implementation = _implementation;
+    //     emit ChangeImplementation(address(0), _implementation);
+    // }
+    function initialize (address owner_, address _implementation) external initializer{
         __Security_init(owner_);
+        implementation = _implementation;
+        emit ChangeImplementation(address(0), _implementation);
     }
 
     function deployDN404(
@@ -46,7 +59,7 @@ contract Management is SecurityUpgradeable, UUPSUpgradeable {
         uint96 initialTokenSupply,
         address initialSupplyOwner
     ) external {
-        _checkPermission(msg.sender);
+        
 
         bytes memory data = abi.encodeWithSelector(
             DN404Upgradeable.initialize.selector,
@@ -57,22 +70,29 @@ contract Management is SecurityUpgradeable, UUPSUpgradeable {
             initialSupplyOwner
         );
 
-        DN404Upgradeable dn404 = new DN404Upgradeable();
-        ERC1967Proxy proxy = new ERC1967Proxy(address(dn404), data);
+        // DN404Upgradeable dn404 = new DN404Upgradeable();
+        ERC1967Proxy proxy = new ERC1967Proxy(implementation, data);
 
         emit DeployedDN404(msg.sender, address(proxy));
     }
 
-    function deployOracle(
-        uint8 _decimals,
-        int256 _initialAnswer
-    ) external {
-        _checkPermission(msg.sender);
+    function changeImplementation(address _implementation) public onlyOwner{
+        emit ChangeImplementation(implementation, _implementation);
+        
+        implementation = _implementation;
 
-        MockV3Aggregator oracle = new MockV3Aggregator(_decimals,_initialAnswer);
-
-        emit DeployedOracle(msg.sender, address(oracle));
     }
+
+    // function deployOracle(
+    //     uint8 _decimals,
+    //     int256 _initialAnswer
+    // ) external {
+        
+
+    //     MockV3Aggregator oracle = new MockV3Aggregator(_decimals,_initialAnswer);
+
+    //     emit DeployedOracle(msg.sender, address(oracle));
+    // }
 
 
     function _authorizeUpgrade(address /* newImplementation */) internal view override(UUPSUpgradeable) {

@@ -23,7 +23,9 @@ contract HelperConfig is Script {
             block.chainid == 1 || 
             block.chainid == 59_140 || 
             block.chainid == 17_000 || 
-            block.chainid == 25_022_022 
+            block.chainid == 25_022_022 ||
+            block.chainid == 534351 ||
+            block.chainid == 1313161555
         ) {
             activeNetworkConfig = getPublicConfig();
         } else {

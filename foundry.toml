@@ -18,7 +18,7 @@ remappings = [
 ]
 
 optimizer = true
-optimezer_runs = 50
+optimezer_runs = 500000
 # match_path = "test/unit/*"
 # via_ir = true
 ffi = true
@@ -35,7 +35,7 @@ scroll_sepolia = "${SCROLL_SEPOLIA_RPC}"
 
 [etherscan]
 sepolia = { key = "${ETHERSCAN_API_KEY}" }
-scroll_sepolia = { key = "${SCROLL_API_KEY}"}
+scroll_sepolia = { key = "${ETHERSCAN_API_KEY}"}
 mumbai = { url = "https://api-testnet.polygonscan.com/api", key = "${POLYGONSCAN_API_KEY}" }
 polygon = { url = "https://api.polygonscan.com/api", key = "${POLYGONSCAN_API_KEY}" }
 

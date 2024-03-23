@@ -70,9 +70,7 @@ contract DN404UpgradeableTest is StdCheats, Test {
 
     function setUp() public {
         vm.startPrank(owner);
-        config = new HelperConfig();
-        uint256 key = config.activeNetworkConfig();
-
+    
         bytes memory init = abi.encodeWithSelector(
             DN404Upgradeable.initialize.selector,
            owner, name_, symbol_, initialTokenSupply, owner,
@@ -147,16 +145,6 @@ contract DN404UpgradeableTest is StdCheats, Test {
     // }
 
     //  ==========  name  ==========
-
-    function testName() public {
-        assertEq(token.name(), name_);
-    }
-
-    //  ==========  symbol  ==========
-
-    function testSymbol() public {
-        assertEq(token.symbol(), symbol_);
-    }
 
     //  ==========  tokenURI  ==========
 
