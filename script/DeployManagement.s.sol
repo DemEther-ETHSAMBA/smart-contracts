@@ -38,8 +38,7 @@ contract DeployDN404 is Script {
         );
 
         Managmentproxy = new ERC1967Proxy(address(Managementimplementation), DN404init);
-        //https://ipfs.io/ipfs/QmTXGUE8ciatzL1epqZTQRDDpzCXQSksQndQnaATfT9ATN5
-
+        
         management = Management(payable(Managmentproxy));
         
         console.log("DN404",address(Managementimplementation));

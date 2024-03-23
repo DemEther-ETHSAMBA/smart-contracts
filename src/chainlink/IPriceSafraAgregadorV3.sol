@@ -31,4 +31,7 @@ interface IPriceSafraAgregadorV3 {
       uint256 updatedAt,
       uint80 answeredInRound
     );
+  function updateAnswer(
+    int256 _answer
+  ) external;
 }

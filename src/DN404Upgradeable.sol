@@ -50,12 +50,8 @@ KeeperCompatibleInterface {
 
     // IPFS URIs for the dynamic nft https://nft.storage/
     // NOTE: IPFs valuation Safra
-     string[] SafraHype = [
-        "https://ipfs.io/ipfs/QmTXGUE8ciatzL1epqZTQRDDpzCXQSksQndQnaATfT9ATN"
-    ];
-    string[] SafraMedium = [
-        "https://ipfs.io/ipfs/QmWYLkVwHR29GzYXQzZfAnvjNFQtWs2QGJSxEHspgr71YL"
-    ];
+    string constant public SafraHype = "https://ipfs.io/ipfs/QmTXGUE8ciatzL1epqZTQRDDpzCXQSksQndQnaATfT9ATN";
+    string constant public SafraMedium = "https://ipfs.io/ipfs/QmWYLkVwHR29GzYXQzZfAnvjNFQtWs2QGJSxEHspgr71YL";
 
     uint public /*immutable*/ interval;
     uint public lastTimeStamp;
@@ -101,6 +97,7 @@ KeeperCompatibleInterface {
         s_symbol = symbol_;
     
 
+        // address mirror = address(new DN404Mirror(owner_));
         address mirror = address(new DN404Mirror(owner_));
         _initializeDN404(initialTokenSupply, initialSupplyOwner, mirror);
         _mint(address(this), 100e18);
@@ -150,8 +147,16 @@ KeeperCompatibleInterface {
      * @notice Sets new base URI for the NFT collection.
      * @param baseURI_: new base URI string.
      */
-    function _setBaseURI(string memory baseURI_) public onlyOwner{
+    function _setBaseURI(string memory baseURI_) private{
         s_baseURI = baseURI_;
+    }
+
+    /**
+     * @notice Sets new base URI for the NFT collection.
+     * @param baseURI_: new base URI string.
+     */
+    function setBaseURI(string memory baseURI_) public onlyOwner{
+        _setBaseURI(baseURI_);
     }
 
     /**
@@ -254,9 +259,9 @@ Thus, you get better performance by specifying the function's execution gas limi
     //  */
      function updateAllTokenUris(string memory trend) internal{
         if(compareStrings("basic", trend)){
-                _setBaseURI(SafraMedium[0]);
+                _setBaseURI(SafraMedium);
         }else {
-                _setBaseURI(SafraHype[0]);
+                _setBaseURI(SafraHype);
         }
 
         emit TokenUpdated(trend);

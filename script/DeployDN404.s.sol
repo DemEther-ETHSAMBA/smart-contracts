@@ -51,7 +51,7 @@ contract DeployDN404 is Script {
         //https://ipfs.io/ipfs/QmTXGUE8ciatzL1epqZTQRDDpzCXQSksQndQnaATfT9ATN5
 
         DN404 = DN404Upgradeable(payable(DN404proxy));
-        DN404._setBaseURI("https://ipfs.io/ipfs/QmWYLkVwHR29GzYXQzZfAnvjNFQtWs2QGJSxEHspgr71YL");
+        DN404.setBaseURI("https://ipfs.io/ipfs/QmWYLkVwHR29GzYXQzZfAnvjNFQtWs2QGJSxEHspgr71YL");
         
 
         console.log("DN404",address(DN404implementation));
