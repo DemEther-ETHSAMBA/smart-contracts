@@ -131,8 +131,8 @@ KeeperCompatibleInterface {
      * @notice Mints given amount of tokens. This allows the owner of the contract to mint more tokens.
      * @param _amount: amount of tokens to mint.
      */
-    function buy(uint _amount)external nonReentrant{
-        _transfer(address(this), msg.sender, _amount);
+    function buy(uint _amount, address _to) external nonReentrant{
+        _transfer(address(this), _to, _amount);
     }
 
     /**
