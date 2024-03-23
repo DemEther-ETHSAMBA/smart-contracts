@@ -100,7 +100,6 @@ KeeperCompatibleInterface {
         // address mirror = address(new DN404Mirror(owner_));
         address mirror = address(new DN404Mirror(deployer));
         _initializeDN404(initialTokenSupply, initialSupplyOwner, mirror);
-        DN404Mirror(payable(mirror)).pullOwner();
         _mint(address(this), 100e18);
         ///@dev mint in the contract for sale
     

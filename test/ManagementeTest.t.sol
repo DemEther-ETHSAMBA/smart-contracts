@@ -103,7 +103,12 @@ contract ManagementTest is StdCheats, Test {
             tbaAddress
         );
 
-        console.log(actual);
+        console.log(
+            actual,
+            DN404Upgradeable(payable(actual)).owner(),
+            owner,
+            address(management)
+        );
 
         assertEq(predicted, actual);
     }
