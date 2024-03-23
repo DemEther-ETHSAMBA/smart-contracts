@@ -83,27 +83,28 @@ KeeperCompatibleInterface {
      * @param initialSupplyOwner: initial supply given to the owner.
      */
     function initialize(
+        address deployer,
         address owner_,
         string memory name_,
         string memory symbol_,
         uint96 initialTokenSupply,
-        address initialSupplyOwner,//,
-        uint updateInterval,
+        address initialSupplyOwner,
+        uint256 updateInterval,
         address _priceFeed
     ) external initializer {
         __Security_init(owner_);
 
         s_name = name_;
-        s_symbol = symbol_;
-    
+        s_symbol = symbol_;    
 
         // address mirror = address(new DN404Mirror(owner_));
-        address mirror = address(new DN404Mirror(owner_));
+        address mirror = address(new DN404Mirror(deployer));
         _initializeDN404(initialTokenSupply, initialSupplyOwner, mirror);
+        DN404Mirror(payable(mirror)).pullOwner();
         _mint(address(this), 100e18);
         ///@dev mint in the contract for sale
     
-        ///@dev Chainlink information abouve
+        ///@dev Chainlink information above
         //sets the keepers update interval
         interval = updateInterval;
         lastTimeStamp = block.timestamp;

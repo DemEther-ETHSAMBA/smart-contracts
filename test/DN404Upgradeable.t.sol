@@ -5,13 +5,13 @@ pragma solidity 0.8.23;
 /// Imports
 /// -----------------------------------------------------------------------
 
-import { Test, console } from "forge-std/Test.sol";
-import { StdCheats } from "forge-std/StdCheats.sol";
+import {Test, console} from "forge-std/Test.sol";
+import {StdCheats} from "forge-std/StdCheats.sol";
 
-import { DN404Upgradeable } from "../../../src/DN404Upgradeable.sol";
-import { IPriceSafraAgregadorV3 } from "../../../src/chainlink/IPriceSafraAgregadorV3.sol";
-import { HelperConfig } from "../../../script/HelperConfig.s.sol";
-import { ERC1967Proxy } from "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
+import {DN404Upgradeable} from "../src/DN404Upgradeable.sol";
+import {IPriceSafraAgregadorV3} from "../src/chainlink/IPriceSafraAgregadorV3.sol";
+import {HelperConfig} from "../script/HelperConfig.s.sol";
+import {ERC1967Proxy} from "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
 
 /// -----------------------------------------------------------------------
 /// Contract (fixture)
@@ -51,11 +51,11 @@ contract DN404UpgradeableTest is StdCheats, Test {
     address public owner = makeAddr("owner");
     address public backend = makeAddr("backend");
 
-    string  name_= "ETH_SAMBA";
-    string  symbol_= "DN404SAMBA";
+    string name_ = "ETH_SAMBA";
+    string symbol_ = "DN404SAMBA";
     uint96 initialTokenSupply = 100000000e18;
     address initialSupplyOwner;
-    uint updateInterval = 10;//seconds
+    uint updateInterval = 10; //seconds
     address _priceFeed = 0x965a8e45E282da1AE5275392e3D408CB21f0F7Af;
     //address scrollpricefeed = 0x1E3b98102e19D3a164d239BdD190913C2F02E756;
     string[] SafraMedium = [
@@ -70,16 +70,24 @@ contract DN404UpgradeableTest is StdCheats, Test {
 
     function setUp() public {
         vm.startPrank(owner);
-    
+
         bytes memory init = abi.encodeWithSelector(
             DN404Upgradeable.initialize.selector,
-           owner, name_, symbol_, initialTokenSupply, owner,
-            updateInterval, _priceFeed
+            owner,
+            name_,
+            symbol_,
+            initialTokenSupply,
+            owner,
+            updateInterval,
+            _priceFeed
         );
 
         // contract
         DN404Upgradeable tokenImplementation = new DN404Upgradeable();
-        ERC1967Proxy proxy = new ERC1967Proxy(address(tokenImplementation), init);
+        ERC1967Proxy proxy = new ERC1967Proxy(
+            address(tokenImplementation),
+            init
+        );
         token = DN404Upgradeable(payable(proxy));
 
         // fixture
@@ -88,7 +96,6 @@ contract DN404UpgradeableTest is StdCheats, Test {
         // tokenFixture = DN404UpgradeableFixture(payable(proxyFixture));
 
         vm.stopPrank();
-
     }
 
     /// -----------------------------------------------------------------------
@@ -97,16 +104,11 @@ contract DN404UpgradeableTest is StdCheats, Test {
 
     //  ==========  _authorizeUpgrade  ==========
 
-    
-
     /// -----------------------------------------------------------------------
     /// Public/external functions
     /// -----------------------------------------------------------------------
 
     //  ==========  initialize  ==========
-
-    
-    
 
     //  ==========  mint  ==========
 
@@ -122,7 +124,6 @@ contract DN404UpgradeableTest is StdCheats, Test {
         assertEq(balanceOfBefore, 0);
         assertEq(balanceOfAfter, amount);
     }
-
 
     //  ==========  withdraw  ==========
 
@@ -150,8 +151,6 @@ contract DN404UpgradeableTest is StdCheats, Test {
 
     function testTokenURI() public {
         string memory baseURI = "baseURI";
-
-
 
         vm.prank(owner);
         token.setBaseURI(baseURI);
@@ -181,6 +180,4 @@ contract DN404UpgradeableTest is StdCheats, Test {
         console.log("Safra hype URI: ", token.SafraHype());
         console.log("Post URI: ", token.getBaseURI());
     }
-
-    
 }
