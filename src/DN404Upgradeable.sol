@@ -207,8 +207,7 @@ Thus, you get better performance by specifying the function's execution gas limi
         if ((block.timestamp - lastTimeStamp) > interval){
             lastTimeStamp = block.timestamp;
 
-            //vamos pegar o ultimo preço definido do cartório ou imobiliária
-            int latestPrice = getLatestPrice(); // IAgregadorV3Interface
+            int latestPrice = getLatestPrice(); 
 
             if(latestPrice == currentPrice){
                 return;
@@ -311,7 +310,8 @@ Thus, you get better performance by specifying the function's execution gas limi
      * @inheritdoc DN404
      */
     function tokenURI(uint256 tokenId) public view override(DN404) returns (string memory result) {
-        result = string(abi.encodePacked(s_baseURI, LibString.toString(tokenId)));//insert ".json" ;
+        //no use tokenId always returns base URI 
+        result = string(abi.encodePacked(s_baseURI));//insert ".json" ;
     }
 
     /**
