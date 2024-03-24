@@ -23,19 +23,23 @@ contract DeployManagement is Script {
 
     address owner_;
     
-
+    bytes32 salt = bytes32("DemetherETHSamba10");
     function run() public {
         config = new HelperConfig();
 
         (uint256 key) = config.activeNetworkConfig();
 
         vm.startBroadcast(vm.rememberKey(key));
-        address _implementation = 0x4a76115b700C0063273Cf8Eb94071555a2Aa8f03; ///REPLACE WITH IMPLEMENTATION ADDRESS
-        Management Managementimplementation = new Management();
+        address _implementation = 0x9159718813035c026254d119D6B723Fc5f5Ec5C9; ///REPLACE WITH IMPLEMENTATION ADDRESS
+        address pricefeed = 0x4b7360Be27A6E5891c211B78A50987395B39F3bC;
+        Management Managementimplementation = new Management{
+            salt: salt
+        }();
         bytes memory DN404init = abi.encodeWithSelector(
             Management.initialize.selector, 
             vm.addr(key),
-            _implementation
+            _implementation,
+            pricefeed
         );
 
         Managmentproxy = new ERC1967Proxy(address(Managementimplementation), DN404init);

@@ -30,7 +30,7 @@ sepolia = "${SEPOLIA_RPC_URL}"
 mumbai = "${MUMBAI_RPC_URL}"
 polygon = "${POLYGON_RPC_URL}"
 ethereum = "${ETHEREUM_RPC_URL}"
-aurora = "${OPTIMISM_TESTNET_URL}"
+aurora = "${AURORA_RPC_URL}"
 scroll_sepolia = "${SCROLL_SEPOLIA_RPC}"
 
 [etherscan]

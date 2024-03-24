@@ -26,8 +26,10 @@ contract DeployDN404 is Script {
     uint96 initialTokenSupply = 100000000e18;
     address initialSupplyOwner;
     uint updateInterval = 10; //seconds
-    address _priceFeed = 0x965a8e45E282da1AE5275392e3D408CB21f0F7Af;
+    address _priceFeed = 0x965a8e45E282da1AE5275392e3D408CB21f0F7Af;//sepolia
     //address scrollpricefeed = 0x1E3b98102e19D3a164d239BdD190913C2F02E756;
+    //address polygonpricefeed = 0x4b7360Be27A6E5891c211B78A50987395B39F3bC;
+    //address aurorapricefeed = 0xeA4f77E3C3B42693688b05616729B9936dF86Af4;
     string[] SafraMedium = [
         "https://ipfs.io/ipfs/QmWYLkVwHR29GzYXQzZfAnvjNFQtWs2QGJSxEHspgr71YL"
     ];
